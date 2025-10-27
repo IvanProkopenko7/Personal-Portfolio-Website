@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "gltf-loader": "^1.0.0",
+    "three": "^0.179.1"
+  },
+  "devDependencies": {
+    "vite": "^7.1.3"
+  }
+}
