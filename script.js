@@ -32,8 +32,74 @@ document.fonts.ready.then(() => {
   });
 });
 
+let sectionAbout = document.querySelector(".section_about");
+
+document.fonts.ready.then(() => {
+  let text = document.querySelector(".about_titleText");
+  
+  SplitText.create(text, {
+    type: "lines",
+    autoSplit: true,
+    onSplit: (self) => {
+      let tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionAbout,
+          start: "0% 15%",
+          end: "70% 100%",
+          scrub: true,
+          markers: true
+        }
+      });
+
+      // Animate each line
+      tl.from(self.lines, {
+        autoAlpha: 0,
+        stagger: 0.1
+      });
+
+      // Animate mask at the same time
+      tl.to(".about_title", {
+        mask: "linear-gradient(90deg, black 100%, transparent 500%)",
+        transform: "translateY(0px)",
+        ease: "none"
+      }, 0); // start at same time as lines
+    }
+  });
+});
 
 
+//SplitText About me article
+document.fonts.ready.then(() => {
+  gsap.set(".about_item", { opacity: 1 });
+  let containers = gsap.utils.toArray(".about_item");
+  containers.forEach((container) => {
+    SplitText.create(container, {
+      type: "words, chars",
+      mask: "words",
+      autoSplit: true,
+      onSplit: (self) => {
+        return gsap.from(self.words, {
+          duration: 1,
+          y: 100,
+          autoAlpha: 0,
+          stagger: 0.10,
+          scrollTrigger: {
+            trigger: sectionAbout,
+            markers: false,
+            scrub: true,
+            start: "0% 15%",
+            end: "70% 100%",
+            onEnter: () => gsap.set(sectionAbout, { pointerEvents: "auto" }),
+            onLeaveBack: () => gsap.set(sectionAbout, { pointerEvents: "none" })
+          }
+        });
+      }
+    });
+  });
+});
+
+
+//SplitText random char appearing
 document.fonts.ready.then(() => {
   gsap.set(".hero_article", { opacity: 1 });
 
@@ -87,34 +153,6 @@ lenis.on('scroll', ScrollTrigger.update);
 gsap.ticker.add((time) => lenis.raf(time * 1000));
 gsap.ticker.lagSmoothing(0);
 
-
-
-
-// Flag to check if user has interacted
-let audioAllowed = false;
-/*
-// Overlay to get user interaction
-const overlay = document.createElement('div');
-overlay.id = 'sound-overlay';
-overlay.style.cssText = `
-    position: fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:black;
-    color:white;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:24px;
-    cursor:pointer;
-    z-index:1000;
-`;
-overlay.innerHTML = '<p>Click anywhere to enable guitar sound</p>';
-document.body.appendChild(overlay);
-
-*/
 
 
 
