@@ -34,7 +34,7 @@ let projectLink = document.querySelectorAll(".project_link");
 
 // ----------------- Load Model -----------------
 const loader = new GLTFLoader();
-loader.load('/laptop_blender.glb', (gltf) => {
+loader.load('/personal-portfolio/laptop_blender.glb', (gltf) => {
   bee = gltf.scene;
   scene.add(bee);
 

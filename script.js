@@ -32,11 +32,41 @@ document.fonts.ready.then(() => {
   });
 });
 
+let translateContentTL = gsap.timeline({
+  scrollTrigger: {
+    trigger: "body",
+    start: "0% 0%",
+    end: "100% 100%",
+    scrub: true,
+    markers: false,
+  }
+});
+gsap.set(".about_content", { opacity: 1 });
+let opacityContentTL = gsap.timeline({
+  scrollTrigger: {
+    trigger: ".section_about",
+    start: "80% 100%",
+    end: "100% 100%",
+    scrub: true,
+    markers: false,
+  }
+});
+opacityContentTL.to(".about_content", {
+  opacity: 0,
+  ease: "none"
+}, 0);
+
+// Animate mask at the same time
+translateContentTL.to(".about_content", {
+  transform: "translate3d(0, -50px, 0)",
+  ease: "none"
+}, 0);
+
 let sectionAbout = document.querySelector(".section_about");
 
 document.fonts.ready.then(() => {
   let text = document.querySelector(".about_titleText");
-  
+
   SplitText.create(text, {
     type: "lines",
     autoSplit: true,
@@ -45,56 +75,50 @@ document.fonts.ready.then(() => {
         scrollTrigger: {
           trigger: sectionAbout,
           start: "0% 15%",
-          end: "70% 100%",
+          end: "50% 100%",
           scrub: true,
-          markers: true
+          markers: false,
         }
-      });
-
-      // Animate each line
-      tl.from(self.lines, {
-        autoAlpha: 0,
-        stagger: 0.1
       });
 
       // Animate mask at the same time
       tl.to(".about_title", {
-        mask: "linear-gradient(90deg, black 100%, transparent 500%)",
-        transform: "translateY(0px)",
+        mask: "linear-gradient(90deg, rgb(0, 0, 0) 100%, rgba(255, 255, 255, 0) 150%)",
+        transform: "translate3d(0, 0, 0)",
         ease: "none"
-      }, 0); // start at same time as lines
+      }, 0);
     }
   });
 });
 
 
 //SplitText About me article
+
 document.fonts.ready.then(() => {
-  gsap.set(".about_item", { opacity: 1 });
-  let containers = gsap.utils.toArray(".about_item");
-  containers.forEach((container) => {
-    SplitText.create(container, {
-      type: "words, chars",
-      mask: "words",
-      autoSplit: true,
-      onSplit: (self) => {
-        return gsap.from(self.words, {
-          duration: 1,
-          y: 100,
-          autoAlpha: 0,
-          stagger: 0.10,
-          scrollTrigger: {
-            trigger: sectionAbout,
-            markers: false,
-            scrub: true,
-            start: "0% 15%",
-            end: "70% 100%",
-            onEnter: () => gsap.set(sectionAbout, { pointerEvents: "auto" }),
-            onLeaveBack: () => gsap.set(sectionAbout, { pointerEvents: "none" })
-          }
-        });
-      }
-    });
+  let text = document.querySelector(".about_text");
+  SplitText.create(text, {
+    type: "lines",
+    mask: "lines",
+    linesClass: "about_line",
+    autoSplit: true,
+    onSplit: (self) => {
+      let tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionAbout,
+          start: "10% 15%",
+          end: "80% 100%",
+          scrub: true,
+          markers: false,
+        }
+      });
+
+      tl.to(".about_line", {
+        mask: "linear-gradient(90deg, rgb(0, 0, 0) 100%, rgba(255, 255, 255, 0) 150%)",
+        transform: "translate3d(0, 0, 0)",
+        ease: "none",
+        stagger: 0.2,
+      }, 0);
+    }
   });
 });
 
@@ -168,7 +192,7 @@ gsap.to(".section", {
     scrub: true,
   }
 });
-gsap.to(".projects", {
+gsap.to(".section > div", {
   y: "50vh",
   ease: "none",
   scrollTrigger: {
