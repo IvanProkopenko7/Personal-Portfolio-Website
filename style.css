@@ -85,51 +85,6 @@ h6 {
 
 
 
-/* Custom CSS */
-
-
-/*
-
-@keyframes rotate {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-.gradientBody {
-  background-color: #071c39;
-  position: absolute;
-  inset: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-}
-.gradient {
-  width: 100%;
-  height: 100vh;
-  filter: blur(150px);
-  background-image: linear-gradient(hsl(222, 84%, 60%), hsl(164, 79%, 71%));
-  animation: rotate 50s cubic-bezier(0.8, 0.2, 0.2, 0.8) alternate infinite;
-  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-}
-
-@media (min-width: 720px) {
-  .gradient {
-    width: 500px;
-    height: 500px;
-    filter: blur(100px);
-  }
-}
-
-* {
-  transition: all 0.5s ease-out;
-}
-*/
-
 
 a {
   text-decoration: none;
@@ -191,18 +146,31 @@ h3 {
 
 
 .section {
+  position: relative; /* makes sticky work relative to this container */
   width: 100%;
-  min-height: 200vh;
-  z-index: 100;
   background-color: white;
+  
+}
+.projects {
+  margin-top: -100vh;
+  padding-left: 45%;
+  padding-bottom: 160px;
 }
 
 .project_list {
   display: flex;
   flex-direction: column;
-  padding-left: 45%;
   gap: 0px;
   list-style-type: none;
+}
+#container3D {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;  /* fills viewport while sticky */
+  z-index: 10;
+  pointer-events: none; /* so it doesn’t block clicks on projects */
+  padding-top: 44px;
 }
 
 
@@ -263,21 +231,6 @@ h3 {
   color: black;
 }
 
-/*
-.project_link:hover {
-  color: red !important;
-}
-  */
-
-
-
-
-#container3D {
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  pointer-events: none;
-}
 
 
 .pointer {
@@ -292,15 +245,22 @@ h3 {
   mix-blend-mode: difference;
 }
 
+.home {
+  margin-bottom: 50vh;
+  padding-bottom: 40px;
+}
+.page {
+  background: #fff;
+}
 .footer {
-  background-color: #222;
-  color: white;
-  height: 50vh;
-  padding: 70px 60px 60px 60px;
-  position: absolute;
-  translate: 0 -50vh;
-  width: 100%;
-  z-index: -1;
+  background: #000;
+    bottom: 0;
+    color: #fff;
+    left: 0;
+    position: fixed;
+    width: 100%;
+    min-height: 50vh;
+    z-index: -1;
 }
 
 
@@ -399,11 +359,6 @@ h3 {
   justify-content: center;
 }
 .footer_socialLink {
-}
-.footer_bottom {
-  display: flex;
-  justify-content: space-between;
-  padding-bottom: 50px;
 }
 .footer_place {
     align-self: flex-end;
