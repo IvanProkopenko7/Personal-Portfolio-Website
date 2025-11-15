@@ -128,7 +128,7 @@ loader.load('/personal-portfolio/laptop_blender.glb', (gltf) => {
   })
   //------------------------------------------------------------------------------------------
   // Laptop closing animation------------------------------------------------------------------------
-
+/*
     let tl2 = gsap.timeline({
     scrollTrigger: {
       trigger: '.section',
@@ -151,6 +151,7 @@ loader.load('/personal-portfolio/laptop_blender.glb', (gltf) => {
     time: 3,
     ease: "none"
   })
+    */
   //------------------------------------------------------------------------------------------
   //Set laptop initial position------------------------------------------------------------
   windowChecker(0);
@@ -201,7 +202,7 @@ function modelMove(time) {
   const sectionRect = section.getBoundingClientRect();
   if (sectionRect.top <= window.innerHeight / 2) currentSection = 'section';
   if (sectionRect.top > window.innerHeight / 2) currentSection = 'about';
-  if (sectionRect.bottom < window.innerHeight * 0.8) currentSection = 'footer';
+  //if (sectionRect.bottom < window.innerHeight * 0.8) currentSection = 'footer';
   const position_active = arrPositionModel.findIndex((val) => val.id === currentSection);
   if (position_active >= 0 && bee) {
     const coords = arrPositionModel[position_active];
@@ -240,13 +241,11 @@ function windowChecker(time) {
     arrPositionModel = [
       { id: 'about', position: { x: -3, y: -0.4, z: -8 }, rotation: { x: 0.5, y: -0.8, z: 0 } },
       { id: 'section', position: { x: -0.6, y: -0.7, z: -8 }, rotation: { x: 0.5, y: -0.5, z: 0 } },
-      { id: 'footer', position: { x: 0.3, y: -1.3, z: -6 }, rotation: { x: 0.5, y: -0.5, z: 0 } },
     ];
   } else {
     arrPositionModel = [
-      { id: 'about', position: { x: -7, y: 0, z: 0 }, rotation: { x: 0, y: 0.2, z: 0 } },    //{ id: 'hero', position: { x: -8, y: -0.4, z: -6 }, rotation: { x: 0.5, y: -0.5, z: 0 } },
-      { id: 'section', position: { x: -2.5, y: -0.1, z: 0 }, rotation: { x: 0.05, y: 0.2, z: 0 } },   //{ id: 'section', position: { x: -3, y: -0.7, z: -4 }, rotation: { x: 0.5, y: -0.5, z: 0 } },
-      { id: 'footer', position: { x: -7, y: 0.1, z: 0 }, rotation: { x: 0, y: 0.2, z: 0 } },     //{ id: 'footer', position: { x: 1, y: -1.3, z: -2 }, rotation: { x: 0.5, y: -0.5, z: 0 } },
+      { id: 'about', position: { x: -3.5, y: -0.1, z: 0 }, rotation: { x: 0.05, y: 0.2, z: 0 } },    //{ id: 'hero', position: { x: -8, y: -0.4, z: -6 }, rotation: { x: 0.5, y: -0.5, z: 0 } },
+      { id: 'section', position: { x: -2.65, y: -0.1, z: 0 }, rotation: { x: 0.05, y: 0.2, z: 0 } },   //{ id: 'section', position: { x: -3, y: -0.7, z: -4 }, rotation: { x: 0.5, y: -0.5, z: 0 } },
     ];
   }
   if (bee) modelMove(time);
