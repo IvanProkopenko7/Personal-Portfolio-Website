@@ -148,12 +148,12 @@ h3 {
   /* makes sticky work relative to this container */
   width: 100%;
   background-color: white;
-
 }
 
 .projects {
   display: flex;
   margin-top: -100vh;
+  padding-left: 45%;
   padding-bottom: 100px;
 }
 
@@ -167,7 +167,9 @@ h3 {
   display: flex;
   flex-direction: column;
   top: 0;
+  margin-top: -48%;
   padding: 460px 60px 0 60px;
+  height: 100vh;
   width: 45%;
 }
 #container3D {
@@ -182,7 +184,7 @@ h3 {
 
 
 
-
+/* change height to make laptop responsive */
 .section_about {
   position: relative;
   height: 250vh;

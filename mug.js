@@ -30,7 +30,17 @@ const topLightHelper = new THREE.DirectionalLightHelper(topLight, 1, 0xff0000);
 //Text Gallery
 let projectLink = document.querySelectorAll(".project_link");
 
-
+// Model initial position section--------------------------------------------------------
+let currentSection;
+const section = document.querySelector('.section');
+const sectionRect = section.getBoundingClientRect();
+if (sectionRect.top <= window.innerHeight / 2) {
+  currentSection = 'section'
+}
+else {
+  currentSection = 'about';
+};
+//--------------------------------------------------------------------------------------
 // ----------------- Load Model -----------------
 const loader = new GLTFLoader();
 loader.load('/personal-portfolio/laptop_blender.glb', (gltf) => {
@@ -113,8 +123,15 @@ loader.load('/personal-portfolio/laptop_blender.glb', (gltf) => {
       markers: false,
       invalidateOnRefresh: false,
       toggleActions: "play pause reverse complete",
-      onEnter: () => tl.play(),
-      onLeaveBack: () => tl.reverse(),
+      onEnter: () => {
+        currentSection = 'section';
+        tl.play();
+      },
+      onLeaveBack: () => {
+        currentSection = 'about';
+        tl.reverse()
+
+      },
       invalidateOnRefresh: true, // recalc positions on refresh
       onRefresh: self => {
         // set the animation progress depending on scroll
@@ -126,33 +143,6 @@ loader.load('/personal-portfolio/laptop_blender.glb', (gltf) => {
     time: 1.3,
     ease: "none"
   })
-  //------------------------------------------------------------------------------------------
-  // Laptop closing animation------------------------------------------------------------------------
-/*
-    let tl2 = gsap.timeline({
-    scrollTrigger: {
-      trigger: '.section',
-      start: () => `bottom bottom-=${window.innerHeight * 0.2}px`,
-      end: () => `bottom bottom-=${window.innerHeight * 0.2}px`,
-      scrub: false,
-      markers: true,
-      invalidateOnRefresh: false,
-      toggleActions: "play pause reverse complete",
-      onEnter: () => tl.reverse(),
-      onLeaveBack: () => tl.play(),
-      invalidateOnRefresh: true, // recalc positions on refresh
-      onRefresh: self => {
-        // set the animation progress depending on scroll
-        self.animation.progress(self.progress);
-      }
-    }
-  })
-  tl2.to(action, {
-    time: 3,
-    ease: "none"
-  })
-    */
-  //------------------------------------------------------------------------------------------
   //Set laptop initial position------------------------------------------------------------
   windowChecker(0);
   //--------------------------------------------------------------------------------------
@@ -173,23 +163,6 @@ animate();
 
 
 // ----------------- Model movement between sections -----------------
-/*
-  I can move all of this in scroll triggers for section, about and footer.
-  It would be much easier to understand and it's overall better practice.
-
-  Example:
-
-  ScrollTrigger.create({
-    trigger: ".section",
-    start: () => `bottom bottom-=${window.innerHeight * 0.2}px`,
-    endTrigger: "footer",
-    markers: true,
-    onEnter: () => currentSection = 'footer'
-  });
-
-*/
-const section = document.querySelector('.section');
-const footer = document.querySelector('.footer');
 function modelMove(time) {
   let durationTime;
   if (time === 0) {
@@ -198,15 +171,11 @@ function modelMove(time) {
   else if (time === 1) {
     durationTime = 1;
   }
-  let currentSection;
-  const sectionRect = section.getBoundingClientRect();
-  if (sectionRect.top <= window.innerHeight / 2) currentSection = 'section';
-  if (sectionRect.top > window.innerHeight / 2) currentSection = 'about';
-  //if (sectionRect.bottom < window.innerHeight * 0.8) currentSection = 'footer';
+  console.log('currentSection', currentSection);
   const position_active = arrPositionModel.findIndex((val) => val.id === currentSection);
   if (position_active >= 0 && bee) {
     const coords = arrPositionModel[position_active];
-    console.log(coords, durationTime)
+    //console.log(coords, durationTime)
     gsap.to(bee.position, { ...coords.position, duration: durationTime, ease: "power2.out" });
     gsap.to(bee.rotation, { ...coords.rotation, duration: durationTime, ease: "power2.out" });
   }
@@ -235,7 +204,6 @@ window.addEventListener('resize', () => {
 });
 //------------------------------------------------------------------------------------------------------
 // ----------------- Change laptop position and rotation depending on section on the page -----------------
-
 function windowChecker(time) {
   if (window.innerWidth < window.innerHeight) {
     arrPositionModel = [
