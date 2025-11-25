@@ -6,7 +6,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 const camera = new THREE.PerspectiveCamera(16, window.innerWidth / window.innerHeight, 0.1, 1000);
 camera.position.z = 16;
 const scene = new THREE.Scene();
-let bee, mixer, arrPositionModel, action;
+let laptop, mixer, arrPositionModel, action;
 
 const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -14,21 +14,33 @@ renderer.setPixelRatio(window.devicePixelRatio)
 document.getElementById('container3D').appendChild(renderer.domElement);
 //--------------------------------------------------------------------------------
 // ----------------- Lights -----------------
-scene.add(new THREE.AmbientLight(0xffffff, 3));
-//bottom light
-const bottomLight = new THREE.DirectionalLight(0xffffff, 0.3);
-bottomLight.position.set(-0.7, -0.9, -0.6);  //0, 1, 0 
-const bottomLightHelper = new THREE.DirectionalLightHelper(bottomLight, 1, 0xff0000);
-//top light
-const topLight = new THREE.DirectionalLight(0xffffff, 5);
-topLight.position.set(2, 3, -0.7);
-const topLightHelper = new THREE.DirectionalLightHelper(topLight, 1, 0xff0000);
+scene.add(new THREE.AmbientLight(0xffffff, 1));
 
-//scene.add(topLight, bottomLight, bottomLightHelper, topLightHelper);
+// Directional Light 1 - Key light (main light from top-right)
+const keyLight = new THREE.SpotLight(0xffffff, 80);
+keyLight.position.set(0.5, 0, 0);
+scene.add(keyLight);
+const keyLightHelper = new THREE.SpotLightHelper(keyLight, 1, 0xff0000);
+scene.add(keyLightHelper);
 
+// Directional Light 2 - bottom light
+const bottomLight = new THREE.DirectionalLight(0xffffff, 1.5);
+bottomLight.position.set(0, -1, 0);
+scene.add(bottomLight);
+const bottomLightHelper = new THREE.DirectionalLightHelper(bottomLight, 1, 0x00ff00);
+scene.add(bottomLightHelper);
+
+// Directional Light 3 - keyboard light
+const keyboardLight = new THREE.DirectionalLight(0xffffff, 1.5);
+keyboardLight.position.set(0, 1, -0.3);
+scene.add(keyboardLight);
+const keyboardLightHelper = new THREE.DirectionalLightHelper(keyboardLight, 1, 0x0000ff);
+scene.add(keyboardLightHelper);
 
 //Text Gallery
 let projectLink = document.querySelectorAll(".project_link");
+const projectParagraph = document.querySelector(".project-paragraph");
+const projectTitle = document.querySelector(".project-title");
 
 // Model initial position section--------------------------------------------------------
 let currentSection;
@@ -44,8 +56,8 @@ else {
 // ----------------- Load Model -----------------
 const loader = new GLTFLoader();
 loader.load('/personal-portfolio/laptop_blender.glb', (gltf) => {
-  bee = gltf.scene;
-  scene.add(bee);
+  laptop = gltf.scene;
+  scene.add(laptop);
 
 
   // loading screen images--------------------------------------------------------------------------------------------
@@ -61,6 +73,14 @@ loader.load('/personal-portfolio/laptop_blender.glb', (gltf) => {
     woman_window: imageLoader.load("images/woman_window.jpg"),
     manhattan: imageLoader.load("images/manhattan.jpg"),
   };
+  
+  // Store original screen texture
+  let originalScreenTexture = null;
+  laptop.traverse((child) => {
+    if (child.isMesh && child.name === "Object_28") {
+      originalScreenTexture = child.material.map;
+    }
+  });
   //------------------------------------------------------------------------------------------------------------
   // disable Y flipping for all loaded textures, set color space to sRGB-------------------------------------------------
   Object.values(textures).forEach(tex => {
@@ -73,8 +93,18 @@ loader.load('/personal-portfolio/laptop_blender.glb', (gltf) => {
   projectLink.forEach((item) => {
     item.addEventListener("mouseenter", (e) => {
       const el = e.currentTarget;                  // use currentTarget
+      
+      const description = el.getAttribute("data-description");
+      const title = el.getAttribute("data-title");
+      if (description && projectParagraph) {
+        projectParagraph.textContent = description;
+      }
+      if (title && projectTitle) {
+        projectTitle.textContent = title;
+      }
+
       el.classList.add("active");
-      el.style.setProperty("color", "red", "important"); // set !important correctly
+      el.style.setProperty("color", "black", "important"); // set !important correctly
       projectLink.forEach((currentItem) => {
         if (currentItem !== el) {
           currentItem.style.opacity = "0.2";
@@ -82,7 +112,7 @@ loader.load('/personal-portfolio/laptop_blender.glb', (gltf) => {
       });
       //screen image changing----------------------------------------------------------------------------------------
 
-      bee.traverse((child) => {
+      laptop.traverse((child) => {
         if (child.isMesh && child.name === "Object_28") {
           child.material.map = textures[el.id];
           child.material.needsUpdate = true;
@@ -92,22 +122,28 @@ loader.load('/personal-portfolio/laptop_blender.glb', (gltf) => {
     });
 
     item.addEventListener("mouseleave", (e) => {
+      if (projectParagraph) {
+        projectParagraph.textContent = "Hover over the projects to see details.";
+      }
+      if (projectTitle) {
+        projectTitle.textContent = "Projects";
+      }
       projectLink.forEach((currentItem) => {
         currentItem.style.opacity = "1";
         currentItem.style.removeProperty("color"); // remove inline color
         currentItem.classList.remove("active");
-        bee.traverse((child) => {
-          if (child.isMesh && child.name === "Object_28") {
-            if (child.userData.originalMaterial) {
-              child.material = child.userData.originalMaterial;
-            }
-          }
-        });
+      });
+      // Restore original screen texture
+      laptop.traverse((child) => {
+        if (child.isMesh && child.name === "Object_28") {
+          child.material.map = originalScreenTexture;
+          child.material.needsUpdate = true;
+        }
       });
     });
   });
 
-  mixer = new THREE.AnimationMixer(bee);
+  mixer = new THREE.AnimationMixer(laptop);
   const myAnimation = gltf.animations[0];
   action = mixer.clipAction(myAnimation);
   action.play();
@@ -126,11 +162,12 @@ loader.load('/personal-portfolio/laptop_blender.glb', (gltf) => {
       onEnter: () => {
         currentSection = 'section';
         tl.play();
+        windowChecker(1);
       },
       onLeaveBack: () => {
         currentSection = 'about';
-        tl.reverse()
-
+        tl.reverse();
+        windowChecker(1);
       },
       invalidateOnRefresh: true, // recalc positions on refresh
       onRefresh: self => {
@@ -171,13 +208,12 @@ function modelMove(time) {
   else if (time === 1) {
     durationTime = 1;
   }
-  console.log('currentSection', currentSection);
   const position_active = arrPositionModel.findIndex((val) => val.id === currentSection);
-  if (position_active >= 0 && bee) {
+  if (position_active >= 0 && laptop) {
     const coords = arrPositionModel[position_active];
     //console.log(coords, durationTime)
-    gsap.to(bee.position, { ...coords.position, duration: durationTime, ease: "power2.out" });
-    gsap.to(bee.rotation, { ...coords.rotation, duration: durationTime, ease: "power2.out" });
+    gsap.to(laptop.position, { ...coords.position, duration: durationTime, ease: "power2.out" });
+    gsap.to(laptop.rotation, { ...coords.rotation, duration: durationTime, ease: "power2.out" });
   }
 }
 //------------------------------------------------------------------------------------
@@ -188,9 +224,6 @@ ScrollTrigger.create({
   end: "170% top",
   scrub: false,
   onEnter: () => {
-    windowChecker(1);
-  },
-  onUpdate: () => {
     windowChecker(1);
   },
 });
@@ -208,7 +241,7 @@ function windowChecker(time) {
   if (window.innerWidth < window.innerHeight) {
     arrPositionModel = [
       { id: 'about', position: { x: -3, y: -0.4, z: -8 }, rotation: { x: 0.5, y: -0.8, z: 0 } },
-      { id: 'section', position: { x: -0.6, y: -0.7, z: -8 }, rotation: { x: 0.5, y: -0.5, z: 0 } },
+      { id: 'section', position: { x: -0.6 , y: -0.7, z: -8 }, rotation: { x: 0.5, y: -0.5, z: 0 } },
     ];
   } else {
     arrPositionModel = [
@@ -216,6 +249,6 @@ function windowChecker(time) {
       { id: 'section', position: { x: -2.65, y: -0.1, z: 0 }, rotation: { x: 0.05, y: 0.2, z: 0 } },   //{ id: 'section', position: { x: -3, y: -0.7, z: -4 }, rotation: { x: 0.5, y: -0.5, z: 0 } },
     ];
   }
-  if (bee) modelMove(time);
+  if (laptop) modelMove(time);
 }
 //---------------------------------------------------------------------------------------------------------
