@@ -20,22 +20,16 @@ scene.add(new THREE.AmbientLight(0xffffff, 1));
 const keyLight = new THREE.SpotLight(0xffffff, 80);
 keyLight.position.set(0.5, 0, 0);
 scene.add(keyLight);
-const keyLightHelper = new THREE.SpotLightHelper(keyLight, 1, 0xff0000);
-scene.add(keyLightHelper);
 
 // Directional Light 2 - bottom light
 const bottomLight = new THREE.DirectionalLight(0xffffff, 1.5);
 bottomLight.position.set(0, -1, 0);
 scene.add(bottomLight);
-const bottomLightHelper = new THREE.DirectionalLightHelper(bottomLight, 1, 0x00ff00);
-scene.add(bottomLightHelper);
 
 // Directional Light 3 - keyboard light
 const keyboardLight = new THREE.DirectionalLight(0xffffff, 1.5);
 keyboardLight.position.set(0, 1, -0.3);
 scene.add(keyboardLight);
-const keyboardLightHelper = new THREE.DirectionalLightHelper(keyboardLight, 1, 0x0000ff);
-scene.add(keyboardLightHelper);
 
 //Text Gallery
 let projectLink = document.querySelectorAll(".project_link");

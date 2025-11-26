@@ -1,4 +1,41 @@
 gsap.registerPlugin(ScrollTrigger, SplitText);
+
+
+// Hero page appearance animation
+document.fonts.ready.then(() => {
+  // Create timeline for hero entrance with a small delay to let other resources settle
+  const heroTl = gsap.timeline({ 
+    defaults: { ease: "power3.out" },
+    delay: 0.3  // Wait 300ms for other resources to load
+  });
+
+  // Animate IVAN
+  heroTl.to(".hero_name--first", {
+    y: 0,
+    opacity: 1,
+    duration: 1,
+  })
+  // Animate PROKOPENKO with delay
+  .to(".hero_name--last", {
+    y: 0,
+    opacity: 1,
+    duration: 0.8,
+  }, "-=0.6")
+  // Animate contact button
+  .to(".hero_contact", {
+    y: 0,
+    opacity: 1,
+    duration: 0.6,
+    ease: "power2.out"
+  }, "-=0.4"); // Start 0.4s before previous ends
+});
+
+
+
+
+
+
+
 //SplitText Project Gallery
 console.clear();
 

@@ -15,6 +15,10 @@
   margin: 0;
 }
 
+html {
+  font-size: clamp(12px, 1vw, 18px);
+}
+
 /* 3. Enable keyword animations */
 @media (prefers-reduced-motion: no-preference) {
   html {
@@ -134,6 +138,27 @@ h3 {
   line-height: 120%;
 }
 
+.hero_name {
+  display: inline-block;
+  opacity: 0;
+
+  will-change: opacity;
+}
+.hero_name--first {
+  transform: translateY(48px);
+    will-change: transform;
+}
+.hero_name--last {
+  transform: translateY(24px);
+  will-change: transform;
+}
+
+.hero_contact {
+  opacity: 0;
+  transform: translateY(12px);
+  will-change: transform, opacity;
+}
+
 .hero_article {
   font-size: 24px;
   line-height: 1.5;
@@ -207,7 +232,7 @@ h3 {
 
 
 .about_title {
-  font-size: 24px;
+  font-size: 1.5rem;
   font-weight: 800;
   line-height: 128%;
   width: fit-content;
@@ -220,7 +245,7 @@ h3 {
 }
 
 .about_line {
-  font-size: 16px;
+  font-size: 1rem;
   line-height: 150%;
   letter-spacing: -0.5%;
   width: fit-content;
@@ -312,7 +337,7 @@ h3 {
   display: flex;
   flex-direction: column;
   letter-spacing: -0.5px;
-  font-size: 64px;
+  font-size: 4.5714rem;
 }
 .footer_socials {
   display: flex;
@@ -320,7 +345,7 @@ h3 {
 }
 
 .footer_cv {
-  font-size: 256px;
+  font-size: 18.2857rem;
   line-height: 110%;
   display: flex;
   align-items: center;
