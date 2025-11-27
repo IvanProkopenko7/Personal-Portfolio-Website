@@ -1,7 +1,6 @@
 
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-
 // ----------------- Camera & Scene -----------------
 const camera = new THREE.PerspectiveCamera(16, window.innerWidth / window.innerHeight, 0.1, 1000);
 camera.position.z = 16;
@@ -231,6 +230,7 @@ window.addEventListener('resize', () => {
 });
 //------------------------------------------------------------------------------------------------------
 // ----------------- Change laptop position and rotation depending on section on the page -----------------
+
 function windowChecker(time) {
   if (window.innerWidth < window.innerHeight) {
     arrPositionModel = [
@@ -239,8 +239,8 @@ function windowChecker(time) {
     ];
   } else {
     arrPositionModel = [
-      { id: 'about', position: { x: -3.5, y: -0.1, z: 0 }, rotation: { x: 0.05, y: 0.2, z: 0 } },    //{ id: 'hero', position: { x: -8, y: -0.4, z: -6 }, rotation: { x: 0.5, y: -0.5, z: 0 } },
-      { id: 'section', position: { x: -2.65, y: -0.1, z: 0 }, rotation: { x: 0.05, y: 0.2, z: 0 } },   //{ id: 'section', position: { x: -3, y: -0.7, z: -4 }, rotation: { x: 0.5, y: -0.5, z: 0 } },
+      { id: 'about', position: { x: -3.5, y: -0.1, z: 0 }, rotation: { x: 0.05, y: 0.2, z: 0 }},
+      { id: 'section', position: { x: -2.65, y: -0.1, z: 0 }, rotation: { x: 0.05, y: 0.2, z: 0 } },
     ];
   }
   if (laptop) modelMove(time);

@@ -16,7 +16,7 @@
 }
 
 html {
-  font-size: clamp(12px, 1vw, 18px);
+  font-size: clamp(.6571rem, 1vw, 1.2857rem);
 }
 
 /* 3. Enable keyword animations */
@@ -98,11 +98,11 @@ a {
 }
 
 h3 {
-  font-size: 24px;
+  font-size: 1.7143rem;
   font-weight: 600;
   line-height: 122%;
   letter-spacing: -0.5%;
-  margin-bottom: 11px;
+  margin-bottom: .7857rem;
 }
 
 .header {
@@ -127,14 +127,14 @@ h3 {
   display: flex;
   justify-content: space-between;
   align-items: last baseline;
-  margin-left: 60px;
-  margin-bottom: 60px;
-  margin-right: 60px;
+  margin-left: 4.2857rem;
+  margin-bottom: 4.2857rem;
+  margin-right: 4.2857rem;
 }
 
 .hero_title {
   font-weight: 900;
-  font-size: 128px;
+  font-size: 9.1429rem;
   line-height: 120%;
 }
 
@@ -145,25 +145,20 @@ h3 {
   will-change: opacity;
 }
 .hero_name--first {
-  transform: translateY(48px);
+  transform: translateY(3.4286rem);
     will-change: transform;
 }
 .hero_name--last {
-  transform: translateY(24px);
+  transform: translateY(1.7143rem);
   will-change: transform;
 }
 
-.hero_contact {
-  opacity: 0;
-  transform: translateY(12px);
-  will-change: transform, opacity;
-}
 
 .hero_article {
-  font-size: 24px;
+  font-size: 1.7143rem;
   line-height: 1.5;
-  margin-top: 20px;
-  max-width: 600px;
+  margin-top: 1.4286rem;
+  max-width: 42.8571rem;
   opacity: 0;
 }
 
@@ -173,28 +168,29 @@ h3 {
   /* makes sticky work relative to this container */
   width: 100%;
   background-color: white;
-  padding-top: 200px;
+  padding-top: 14.2857rem;
 }
 
 .projects {
   display: flex;
   margin-top: -100vh;
   padding-left: 45%;
-  padding-bottom: 100px;
+  padding-bottom: 7.1429rem;
 }
 
 .project_list {
   display: flex;
   flex-direction: column;
-  gap: 0px;
+  gap: 0rem;
 }
 .project-description {
   position: sticky;
   display: flex;
   flex-direction: column;
   top: 0;
+  font-size: 18px;
   margin-top: -100vh;
-  padding: 63vh 60px 0 60px;
+  padding: 63vh 4.2857rem 0 4.2857rem;
   height: 100vh;
   width: 45%;
 }
@@ -205,7 +201,7 @@ h3 {
   height: 100vh;
   z-index: 10;
   pointer-events: none;
-  padding-top: 40px;
+  padding-top: 2.5rem;
 }
 
 
@@ -226,8 +222,8 @@ h3 {
 .about_content {
   display: flex;
   flex-direction: column;
-  gap: 22px;
-  transform: translate3d(0, 50px, 0);
+  gap: 1.5714rem;
+  transform: translate3d(0, 3.5714rem, 0);
 }
 
 
@@ -255,7 +251,7 @@ h3 {
 
 .project_item {
   color: black;
-  font-size: 64px;
+  font-size: 4.5714rem;
   font-weight: 400;
   opacity: 0;
   pointer-events: none;
@@ -272,8 +268,8 @@ h3 {
   position: fixed;
   top: 0;
   left: 0;
-  width: 32px;
-  height: 24px;
+  width: 2.2857rem;
+  height: 1.7143rem;
   pointer-events: none;
   z-index: 200;
   fill: #000;
@@ -282,7 +278,7 @@ h3 {
 
 .home {
   margin-bottom: 50vh;
-  padding-bottom: 100px;
+  padding-bottom: 5.5rem;
   display: flex;
   flex-direction: column;
 }
@@ -320,7 +316,7 @@ h3 {
   width: 100%;
   height: 50vh;
   z-index: -1;
-  padding: 40px 60px 20px 60px;
+  padding: 2.8571rem 4.2857rem 1.4286rem 4.2857rem;
   display: flex;
   align-items: center;
 }
@@ -336,12 +332,12 @@ h3 {
 .footer_list {
   display: flex;
   flex-direction: column;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.0357rem;
   font-size: 4.5714rem;
 }
 .footer_socials {
   display: flex;
-  gap: 20px;
+  gap: 1.4286rem;
 }
 
 .footer_cv {
@@ -388,10 +384,13 @@ h3 {
 }
 
 .hero_contact {
-  font-size: 64px;
+  opacity: 0;
+  transform: translateY(.8571rem);
+  will-change: transform, opacity;
+  font-size: 4.5714rem;
   font-weight: 400;
-  letter-spacing: 1px;
-  padding: 0 10px;
+  letter-spacing: .0714rem;
+  padding: 0 .7143rem;
   position: relative;
   display: inline-block; /* ensures pseudo-element aligns correctly */
   color: black; /* initial text color */
@@ -405,7 +404,7 @@ h3 {
   bottom: 0;      /* stick to bottom of text */
   left: 0;
   width: 0%;      /* start hidden */
-  height: 5px;    /* thickness of the underline */
+  height: .3571rem;    /* thickness of the underline */
   background-color: black;
   transition: width 0.3s ease;
 }
@@ -421,10 +420,10 @@ h3 {
 
 .linkedin-border {
   display: inline-block;
-  width: 1px;
+  width: .0714rem;
   height: 100%;
   background: white;
-  margin-right: 20px;
+  margin-right: 1.4286rem;
   vertical-align: middle;
 }
 
