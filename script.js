@@ -57,9 +57,18 @@ function initBarba() {
   // Page titles for transition display
   const pageTitles = {
     'home': 'Home',
-    'contact': 'Contact',
+    'project': 'Project',
     'about': 'About'
   };
+
+  // Store project name when clicking project links
+  document.addEventListener('click', function(e) {
+    const projectLink = e.target.closest('.project_link');
+    if (projectLink) {
+      const projectName = projectLink.textContent.trim();
+      sessionStorage.setItem('currentProjectName', projectName);
+    }
+  });
 
   barba.init({
     sync: false,  // Changed to false so pages load sequentially
@@ -71,7 +80,14 @@ function initBarba() {
         
         // Get destination namespace for text
         const nextNamespace = data.next.namespace || 'page';
-        transitionText.textContent = pageTitles[nextNamespace] || nextNamespace;
+        
+        // For project pages, show the project name instead of "Project"
+        if (nextNamespace === 'project') {
+          const storedName = sessionStorage.getItem('currentProjectName');
+          transitionText.textContent = storedName || 'Project';
+        } else {
+          transitionText.textContent = pageTitles[nextNamespace] || nextNamespace;
+        }
         
         // Disable pointer events during transition
         document.body.style.pointerEvents = 'none';
@@ -185,9 +201,27 @@ function initPageAnimations() {
   // Check if we're on the home page
   const isHomePage = document.querySelector('.section_about') !== null;
   
+  // Check if we're on the project page
+  const isProjectPage = document.querySelector('#projectName') !== null;
+  
   if (isHomePage) {
     initProjectGallery();
     initAboutAnimations();
+  }
+  
+  if (isProjectPage) {
+    updateProjectName();
+  }
+}
+
+// Update project name from sessionStorage
+function updateProjectName() {
+  const projectNameEl = document.getElementById('projectName');
+  if (projectNameEl) {
+    const storedName = sessionStorage.getItem('currentProjectName');
+    if (storedName) {
+      projectNameEl.textContent = storedName.toUpperCase();
+    }
   }
 }
 

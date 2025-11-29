@@ -468,6 +468,7 @@ h3 {
 
 .footer__row--bottom {
   align-items: flex-end;
+  position: relative;
 }
 
 .footer__col {
@@ -478,10 +479,14 @@ h3 {
 
 .footer__col--right {
   align-items: flex-end;
+  justify-content: center;
 }
 
 .footer__col--center {
   align-items: center;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .footer__cta-link {
@@ -494,7 +499,7 @@ h3 {
   display: inline-block;
   width: fit-content;
   line-height: 1.2;
-  padding: 8px 0;
+  padding: 14px 0;
 }
 
 .footer__cta-link::after {
@@ -513,7 +518,7 @@ h3 {
 }
 
 .footer__cv-link {
-  font-size: 10rem;
+  font-size: 12rem;
   font-weight: 400;
   letter-spacing: -0.02em;
   color: #fff;
@@ -521,7 +526,7 @@ h3 {
   position: relative;
   display: inline-block;
   line-height: 1;
-  padding: 8px 0;
+  padding: 14px 0;
 }
 
 .footer__cv-link::after {
