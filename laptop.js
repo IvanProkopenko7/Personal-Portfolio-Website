@@ -69,7 +69,7 @@ function init3DModel() {
   //--------------------------------------------------------------------------------------
   // ----------------- Load Model -----------------
   const loader = new GLTFLoader();
-  loader.load('/personal-portfolio/laptop_blender.glb', (gltf) => {
+  loader.load('laptop_blender.glb', (gltf) => {
     laptop = gltf.scene;
     scene.add(laptop);
 
