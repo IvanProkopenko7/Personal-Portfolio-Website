@@ -115,6 +115,25 @@
   <script src="https://unpkg.com/@barba/core"></script>
   <script type="module" src="script.js"></script>
   <script type="module" src="laptop.js"></script>
+  <script>
+    // Footer clock - Poland timezone (Europe/Warsaw)
+    function updateClock() {
+      const clock = document.getElementById('footerClock');
+      if (clock) {
+        const now = new Date();
+        const options = { 
+          timeZone: 'Europe/Warsaw',
+          hour: '2-digit', 
+          minute: '2-digit', 
+          second: '2-digit',
+          hour12: false 
+        };
+        clock.textContent = now.toLocaleTimeString('en-GB', options);
+      }
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+  </script>
 </body>
 
 </html>
